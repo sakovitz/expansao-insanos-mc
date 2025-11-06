@@ -1,50 +1,73 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+# Constituição de Engenharia - Insanos MC - Área de Expansão
 
-## Core Principles
+## Missão
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+Estabelecer os princípios técnicos e de qualidade que guiam o desenvolvimento de código, automações e inteligência artificial no projeto expansao-insanos-mc. Cada linha de código deve refletir o espírito do clube: disciplina, força e irmandade.
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+## Princípios Fundamentais
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### I. Estrutura e Organização do Código
+- Módulos com classes e funções separadas por responsabilidade
+- Código executável isolado em `if __name__ == "__main__":`
+- Convenções de nomenclatura PEP8:
+  - snake_case para variáveis e funções
+  - PascalCase para classes
+  - UPPER_CASE para constantes
+- Priorizar composição sobre duplicação
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### II. Documentação Mandatória
+- Docstrings obrigatórias (formato Google/NumPy) para funções, classes e módulos
+- Documentação completa em `/docs` para cada módulo
+- Runbooks detalhados com objetivos, parâmetros, instruções e troubleshooting
+- Comentários focados no "porquê", não no "como"
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### III. Segurança e Logging (NÃO-NEGOCIÁVEL)
+- Logs estruturados com níveis (INFO, WARNING, ERROR, CRITICAL)
+- Centralização de logs em módulo dedicado
+- Proteção de credenciais:
+  - Uso obrigatório de .env
+  - Políticas de senha robustas
+  - Integração com gestores de segredos
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+### IV. Qualidade e Organização
+- Manter código organizado e legível
+- Seguir padrões básicos de indentação
+- Ambiente isolado (venv/conda)
+- Dependências documentadas em requirements.txt/pyproject.toml
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+## Requisitos Técnicos
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+- Python como linguagem principal
+- Ambientes virtuais isolados
+- Documentação clara e organizada
+- Monitoramento e logging centralizado
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+## Processo de Desenvolvimento
 
-## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
+1. Documentação inicial
+2. Revisão de design
+3. Implementação
+4. Code review por pelo menos um membro da equipe
+5. Revisão de segurança
+6. Aprovação para deploy
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+## Governança
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+Esta constituição é a autoridade máxima para práticas de desenvolvimento. Desvios requerem:
+- Documentação com justificativa
+- Aprovação do líder técnico
+- Prazo definido para revisão
+- Registro como dívida técnica
+
+Alterações na constituição exigem:
+1. Proposta formal
+2. Período de discussão (mínimo 1 semana)
+3. Aprovação unânime dos líderes
+4. Atualização da documentação
+5. Notificação da equipe
+
+🧩 Filosofia do Projeto:
+Cada pipeline é um motor, cada script é uma engrenagem — juntos impulsionam a expansão do clube.
+Código limpo, bem documentado e seguro é a base para evoluir com confiança e respeito à irmandade.
+
+**Versão**: 1.0.0 | **Ratificada**: 2024-01-17 | **Última Alteração**: 2024-01-17
