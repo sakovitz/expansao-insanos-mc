@@ -1,0 +1,236 @@
+openapi: 3.0.3
+info:
+  title: Comunicado Image Generation API
+  description: |
+    API REST para geração automática de comunicados visuais padronizados para a área de Expansão do Insanos MC.
+
+    **Funcionalidades**:
+    - Geração de imagens JPEG 1542x1600 com template padronizado
+    - Suporte completo a caracteres UTF-8 (português)
+    - Validação automática de entrada
+    - Ajuste dinâmico de tamanho de fonte
+    - Resposta em <10 segundos
+  version: 1.0.0
+  contact:
+    name: Área de Expansão - Insanos MC
+
+servers:
+  - url: http://localhost:8000
+    description: Servidor local de desenvolvimento
+  - url: https://api.expansao.insanosmc.com
+    description: Servidor de produção (futuro)
+
+paths:
+  /gerar-comunicado:
+    post:
+      summary: Gerar Comunicado Visual
+      description: |
+        Gera uma imagem JPEG padronizada de comunicado com os dados fornecidos.
+
+        **Comportamento**:
+        - Valida todos os campos obrigatórios
+        - Gera imagem 1542x1600 JPEG
+        - Salva com nome `YYYYMMDD_INTEGRANTE.jpeg`
+        - Retorna caminho do arquivo gerado
+
+        **Performance**: Resposta típica em 2-5 segundos
+      operationId: gerarComunicado
+      tags:
+        - Comunicados
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ComunicadoRequest'
+            examples:
+              conclusao_estagio:
+                summary: Conclusão de Estágio
+                value:
+                  origem: "EXPANSÃO"
+                  evento: "CONCLUSÃO DE ESTÁGIO"
+                  nome_integrante: "XANDECO (183)"
+                  resultado: "SEM APROVEITAMENTO:"
+                  localizacao: "EXPANSÃO REGIONAL"
+                  grau: "GRAU V"
+                  data: "04/11/2025"
+              promocao_grau:
+                summary: Promoção de Grau
+                value:
+                  origem: "EXPANSÃO"
+                  evento: "PROMOÇÃO DE GRAU"
+                  nome_integrante: "JOSÉ DA CONCEIÇÃO (245)"
+                  resultado: "APROVADO:"
+                  localizacao: "EXPANSÃO NACIONAL"
+                  grau: "GRAU III"
+                  data: "15/12/2025"
+      responses:
+        '200':
+          description: Comunicado gerado com sucesso
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ComunicadoResponse'
+              example:
+                success: true
+                file_path: "automacoes/outputs/20251104_XANDECO.jpeg"
+                generation_time_ms: 1823.45
+        '400':
+          description: Dados de entrada inválidos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              examples:
+                campo_faltando:
+                  summary: Campo obrigatório ausente
+                  value:
+                    detail:
+                      - loc: ["body", "data"]
+                        msg: "field required"
+                        type: "value_error.missing"
+                formato_data_invalido:
+                  summary: Formato de data inválido
+                  value:
+                    detail:
+                      - loc: ["body", "data"]
+                        msg: "Data inválida. Formato esperado: DD/MM/AAAA"
+                        type: "value_error.str.regex"
+                texto_muito_longo:
+                  summary: Texto excede tamanho máximo
+                  value:
+                    detail: "Texto muito longo para caber na imagem mesmo com fonte mínima"
+        '500':
+          description: Erro interno do servidor
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+              example:
+                detail: "Erro ao gerar imagem: Fonte não encontrada"
+
+  /health:
+    get:
+      summary: Health Check
+      description: Verifica se a API está operacional
+      operationId: healthCheck
+      tags:
+        - Monitoramento
+      responses:
+        '200':
+          description: API operacional
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "healthy"
+                  service:
+                    type: string
+                    example: "comunicado-api"
+
+components:
+  schemas:
+    ComunicadoRequest:
+      type: object
+      required:
+        - origem
+        - evento
+        - nome_integrante
+        - resultado
+        - localizacao
+        - grau
+        - data
+      properties:
+        origem:
+          type: string
+          description: Fonte do comunicado (ex: "EXPANSÃO")
+          minLength: 1
+          maxLength: 200
+          example: "EXPANSÃO"
+        evento:
+          type: string
+          description: Tipo de evento (ex: "CONCLUSÃO DE ESTÁGIO")
+          minLength: 1
+          maxLength: 200
+          example: "CONCLUSÃO DE ESTÁGIO"
+        nome_integrante:
+          type: string
+          description: Nome do colete com número no formato "NOME (NÚMERO)"
+          pattern: '^.+\s\(\d+\)$'
+          minLength: 1
+          maxLength: 200
+          example: "XANDECO (183)"
+        resultado:
+          type: string
+          description: Resultado do evento (ex: "SEM APROVEITAMENTO:")
+          minLength: 1
+          maxLength: 200
+          example: "SEM APROVEITAMENTO:"
+        localizacao:
+          type: string
+          description: Localização do integrante (ex: "EXPANSÃO REGIONAL")
+          minLength: 1
+          maxLength: 200
+          example: "EXPANSÃO REGIONAL"
+        grau:
+          type: string
+          description: Grau do colete (ex: "GRAU V")
+          minLength: 1
+          maxLength: 200
+          example: "GRAU V"
+        data:
+          type: string
+          description: Data do comunicado no formato DD/MM/AAAA
+          pattern: '^\d{2}/\d{2}/\d{4}$'
+          example: "04/11/2025"
+
+    ComunicadoResponse:
+      type: object
+      required:
+        - success
+        - file_path
+        - generation_time_ms
+      properties:
+        success:
+          type: boolean
+          description: Indica se a geração foi bem-sucedida
+          example: true
+        file_path:
+          type: string
+          description: Caminho do arquivo JPEG gerado
+          example: "automacoes/outputs/20251104_XANDECO.jpeg"
+        generation_time_ms:
+          type: number
+          format: float
+          description: Tempo de geração em milissegundos
+          example: 1823.45
+
+    ErrorResponse:
+      type: object
+      properties:
+        detail:
+          oneOf:
+            - type: string
+            - type: array
+              items:
+                type: object
+                properties:
+                  loc:
+                    type: array
+                    items:
+                      type: string
+                  msg:
+                    type: string
+                  type:
+                    type: string
+      example:
+        detail: "Erro de validação"
+
+tags:
+  - name: Comunicados
+    description: Operações de geração de comunicados visuais
+  - name: Monitoramento
+    description: Endpoints de health check e status
