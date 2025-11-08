@@ -12,3 +12,15 @@ python-dotenv==1.0.*
 
 # HTTP client for external APIs
 requests==2.31.*
+
+# API REST (Automação de Comunicados)
+fastapi==0.115.*
+uvicorn[standard]==0.32.*
+pydantic==2.9.*
+
+# Manipulação de imagens
+Pillow>=10.4.0
+
+# Testes
+pytest>=9.0.0
+httpx>=0.28.0

@@ -1,0 +1,7 @@
+# Ignorar todas as imagens geradas (temporárias)
+*.jpeg
+*.jpg
+*.png
+
+# Manter o diretório no git
+!.gitignore
