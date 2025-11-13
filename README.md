@@ -130,4 +130,16 @@ deactivate
 Para guia completo de setup com instruções específicas do SO e troubleshooting detalhado, consulte [📖 docs/SETUP.md](docs/SETUP.md).
 
 ---
+
+## 👥 Governança e Code Review
+
+Este projeto usa um arquivo [`CODEOWNERS`](CODEOWNERS) para garantir qualidade de código através de revisão obrigatória.
+
+- **Proprietários de Código**: @sakovitz, @jonasplima
+- **Todas as PRs** requerem aprovação de pelo menos um proprietário antes da mesclagem
+- **Guia Completo**: Veja [docs/CODE-REVIEW-GUIDE.md](docs/CODE-REVIEW-GUIDE.md)
+- **Política de Governança**: Veja [docs/CODEOWNERS-POLICY.md](docs/CODEOWNERS-POLICY.md)
+
+---
+
 **"Dividir e Conquistar"**
