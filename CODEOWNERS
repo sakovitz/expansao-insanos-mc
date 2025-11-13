@@ -1,0 +1,9 @@
+# Proprietários de Código - expansao-insanos-mc
+# Este arquivo define quem deve revisar e aprovar mudanças no repositório
+#
+# Sintaxe:
+# [padrão de arquivo] [proprietário(s)]
+#
+# O padrão * significa "todos os arquivos"
+
+*  @sakovitz @jonasplima

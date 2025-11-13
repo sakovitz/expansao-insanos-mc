@@ -1,0 +1,14 @@
+# Core Dependencies for Insanos MC Expansao Project
+# Python 3.11+ required
+
+# Data manipulation for ETL pipelines
+pandas==2.1.*
+
+# PostgreSQL connection driver
+psycopg2==2.9.*
+
+# Load .env environment variables for credentials
+python-dotenv==1.0.*
+
+# HTTP client for external APIs
+requests==2.31.*
